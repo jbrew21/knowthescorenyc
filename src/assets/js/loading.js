@@ -54,18 +54,10 @@
     current++;
 
     if (current >= sequence.length) {
-      // Keep last photo behind dark overlay for logo reveal
-      if (current > 0) {
-        sequence[current - 1].photo.classList.add('active');
-      }
-      overlay.style.background = 'rgba(0,0,0,0.8)';
-      logo.classList.add('active');
-
-      setTimeout(function() {
-        screen.classList.add('fade-out');
-        sessionStorage.setItem('ktsnyc_visited', '1');
-        setTimeout(function() { screen.remove(); }, 800);
-      }, 1400);
+      // Fade straight to the site — no logo (hero has it)
+      screen.classList.add('fade-out');
+      sessionStorage.setItem('ktsnyc_visited', '1');
+      setTimeout(function() { screen.remove(); }, 800);
       return;
     }
 

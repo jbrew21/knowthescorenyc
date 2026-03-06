@@ -10,11 +10,9 @@ layout: base.njk
   {% endfor %}
   {# NYC landmark photos — interleaved by JS #}
   <img src="/assets/images/nyc-brooklyn-bridge.jpg" alt="Brooklyn Bridge" class="montage-photo montage-landmark" data-landmark="0">
-  <img src="/assets/images/nyc-times-square.jpg" alt="Times Square" class="montage-photo montage-landmark" data-landmark="1">
-  <img src="/assets/images/nyc-subway.jpg" alt="The Subway" class="montage-photo montage-landmark" data-landmark="2">
+  <img src="/assets/images/nyc-times-square.jpg" alt="Statue of Liberty" class="montage-photo montage-landmark" data-landmark="1">
+  <img src="/assets/images/nyc-subway.jpg" alt="Brooklyn Bridge at Night" class="montage-photo montage-landmark" data-landmark="2">
   <img src="/assets/images/nyc-skyline.jpg" alt="Manhattan Skyline" class="montage-photo montage-landmark" data-landmark="3">
-  <div class="montage-overlay montage-logo-overlay"></div>
-  <img src="/assets/images/logo.webp" alt="{{ site.title }}" class="montage-logo">
   <div class="montage-dots"></div>
 </div>
 
@@ -26,10 +24,49 @@ layout: base.njk
   <ul class="nav-links">
     <li><a href="#map-section">Map</a></li>
     <li><a href="#interviews">Interviews</a></li>
+    <li><a href="#quiz">Quiz</a></li>
     <li><a href="#get-interviewed">Get Interviewed</a></li>
     <li><a href="#about">About</a></li>
   </ul>
 </nav>
+
+{# ===== LIVE NYC TICKER ===== #}
+<div class="nyc-ticker" aria-label="Live NYC data">
+  <div class="ticker-track">
+    <span class="ticker-item" id="ticker-weather">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    <span class="ticker-item" id="ticker-rats">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    <span class="ticker-item" id="ticker-bikes">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    <span class="ticker-item" id="ticker-noise">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    <span class="ticker-item" id="ticker-film">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    <span class="ticker-item" id="ticker-dogs">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    <span class="ticker-item" id="ticker-restaurants">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    <span class="ticker-item" id="ticker-pothole">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    {# duplicate set for seamless scroll loop #}
+    <span class="ticker-item" id="ticker-weather2">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    <span class="ticker-item" id="ticker-rats2">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    <span class="ticker-item" id="ticker-bikes2">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    <span class="ticker-item" id="ticker-noise2">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    <span class="ticker-item" id="ticker-film2">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    <span class="ticker-item" id="ticker-dogs2">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    <span class="ticker-item" id="ticker-restaurants2">Loading...</span>
+    <span class="ticker-sep">&bull;</span>
+    <span class="ticker-item" id="ticker-pothole2">Loading...</span>
+  </div>
+</div>
 
 {# ===== HERO ===== #}
 <section class="hero" id="hero">
@@ -51,7 +88,7 @@ layout: base.njk
   <div class="map-container">
     <div id="map" role="application" aria-label="Interactive map of NYC interview locations"></div>
     <div class="map-sidebar">
-      <div class="map-sidebar-title">All Interviews</div>
+      <div class="map-sidebar-title">Find on Map</div>
       {% for interview in collections.interviews %}
       <div class="sidebar-card" data-index="{{ loop.index0 }}" tabindex="0" role="button" aria-label="View {{ interview.data.name }} on the map">
         {% if interview.data.photo %}
@@ -122,6 +159,22 @@ layout: base.njk
   </div>
 </section>
 
+{# ===== QUIZ ===== #}
+<section class="quiz-section" id="quiz">
+  <div class="quiz-inner">
+    <div class="section-header" style="text-align:center">
+      <div class="section-label">Take the Quiz</div>
+      <div class="section-title" style="text-align:center">What Kind of New Yorker Are You?</div>
+      <p style="color:var(--text-secondary);margin-top:0.5rem;font-size:0.92rem">7 questions. No wrong answers. Find out if you <em>know the score</em>.</p>
+    </div>
+    <div class="quiz-progress">
+      <div class="quiz-progress-fill"></div>
+    </div>
+    <div class="quiz-counter">1 / 7</div>
+    <div class="quiz-body"></div>
+  </div>
+</section>
+
 {# ===== GET INTERVIEWED ===== #}
 <section class="interview-request-section" id="get-interviewed">
   <div class="request-inner">
@@ -186,6 +239,33 @@ layout: base.njk
   </div>
 </section>
 
+{# ===== WHY "KNOW THE SCORE" ===== #}
+<section class="origin-section" id="the-name">
+  <div class="origin-inner">
+    <div class="origin-vinyl">
+      <div class="vinyl-record">
+        <div class="vinyl-label">
+          <span class="vinyl-title">Native New Yorker</span>
+          <span class="vinyl-artist">Odyssey &bull; 1977</span>
+        </div>
+      </div>
+    </div>
+    <div class="origin-text">
+      <div class="section-label">Why "Know The Score"</div>
+      <h3 class="origin-headline">It started with a song.</h3>
+      <p class="origin-body">
+        In 1977, Odyssey released "Native New Yorker" — a disco anthem that became the unofficial love letter to everyone who calls this city home. The chorus goes: <em>"You should know the score by now."</em>
+      </p>
+      <p class="origin-body">
+        Knowing the score means knowing the city — the unwritten rules, the best slice spot, when to walk faster, where the locals actually go. That's what this newsletter is about: the people who <em>know the score</em> and the places that prove it.
+      </p>
+      <a href="https://www.youtube.com/watch?v=wCEmPnIJYes" class="btn btn-secondary origin-listen" target="_blank" rel="noopener">
+        &#9654; Listen to the song
+      </a>
+    </div>
+  </div>
+</section>
+
 {# ===== FOOTER ===== #}
 <footer class="footer">
   <div class="footer-tagline">Know The Score NYC</div>
@@ -195,5 +275,4 @@ layout: base.njk
     <a href="{{ site.googleMapsUrl }}" target="_blank" rel="noopener">Google Maps</a>
   </div>
   <div class="footer-copy">&copy; 2026 Isabel Togoh</div>
-  <div class="footer-anthora">We are happy to serve you</div>
 </footer>

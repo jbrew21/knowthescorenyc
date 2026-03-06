@@ -56,7 +56,7 @@ img { max-width: 100%; height: auto; display: block; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%;
+  object-position: center 40%;
   opacity: 0;
   transition: opacity 0.4s ease;
   filter: grayscale(25%) contrast(1.1) brightness(0.95) saturate(0.85);
@@ -197,10 +197,51 @@ img { max-width: 100%; height: auto; display: block; }
 .nav-links a.active { color: var(--blue); font-weight: 600; }
 
 /* =====================================================
+   LIVE NYC TICKER — Scrolling data bar
+   ===================================================== */
+.nyc-ticker {
+  position: fixed;
+  top: 53px;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background: var(--text);
+  overflow: hidden;
+  height: 28px;
+  display: flex;
+  align-items: center;
+}
+.ticker-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+  animation: tickerScroll 55s linear infinite;
+  will-change: transform;
+}
+.ticker-item {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.02em;
+  padding: 0 0.75rem;
+  font-family: var(--font-body);
+}
+.ticker-sep {
+  color: var(--red);
+  font-size: 0.5rem;
+  opacity: 0.6;
+}
+@keyframes tickerScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* =====================================================
    HERO — Bold, editorial
    ===================================================== */
 .hero {
-  padding: 6.5rem 1.5rem 2.5rem;
+  padding: 7.5rem 1.5rem 2.5rem;
   text-align: center;
   max-width: 720px;
   margin: 0 auto;
@@ -549,6 +590,128 @@ img { max-width: 100%; height: auto; display: block; }
 .interview-card:hover .card-arrow { transform: translateX(3px); }
 
 /* =====================================================
+   QUIZ — "What Kind of New Yorker Are You?"
+   ===================================================== */
+.quiz-section {
+  padding: 3.5rem 1.5rem;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.quiz-inner {
+  max-width: 620px;
+  margin: 0 auto;
+}
+.quiz-progress {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 1.5rem 0 0.5rem;
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: var(--red);
+  border-radius: 2px;
+  width: 0;
+  transition: width 0.4s ease;
+}
+.quiz-counter {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-align: right;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+.quiz-question {
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.quiz-option {
+  display: block;
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  background: var(--cream);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  letter-spacing: -0.01em;
+}
+.quiz-option:hover {
+  border-color: var(--blue);
+  background: rgba(43, 57, 144, 0.04);
+  transform: translateX(4px);
+}
+.quiz-option.selected {
+  border-color: var(--red);
+  background: rgba(229, 57, 53, 0.08);
+  color: var(--red);
+  font-weight: 600;
+}
+/* Result */
+.quiz-result {
+  text-align: center;
+  padding: 1.5rem 0;
+}
+.quiz-result-emoji {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+}
+.quiz-result-title {
+  font-size: clamp(1.3rem, 4vw, 1.7rem);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+}
+.quiz-result-quote {
+  font-style: italic;
+  color: var(--red);
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+  font-weight: 500;
+}
+.quiz-result-desc {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.quiz-result-inspired {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+.quiz-result-inspired strong {
+  color: var(--blue);
+}
+.quiz-result-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* =====================================================
    GET INTERVIEWED — Clean, modern form
    ===================================================== */
 .interview-request-section {
@@ -630,6 +793,121 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 /* =====================================================
+   ORIGIN STORY — "Native New Yorker"
+   ===================================================== */
+.origin-section {
+  padding: 3.5rem 1.5rem;
+  background: var(--text);
+  color: var(--white);
+  overflow: hidden;
+}
+.origin-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+.origin-vinyl {
+  flex-shrink: 0;
+}
+.vinyl-record {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%,
+    #111 0%, #111 18%,
+    #222 18%, #222 20%,
+    #111 20%, #111 38%,
+    #1a1a1a 38%, #1a1a1a 40%,
+    #222 40%, #222 42%,
+    #111 42%, #111 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: vinylSpin 8s linear infinite;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
+.vinyl-label {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--red), var(--red-soft));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5rem;
+}
+.vinyl-title {
+  font-size: 0.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  animation: vinylSpinReverse 8s linear infinite;
+}
+.vinyl-artist {
+  font-size: 0.38rem;
+  opacity: 0.8;
+  margin-top: 2px;
+  animation: vinylSpinReverse 8s linear infinite;
+}
+@keyframes vinylSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes vinylSpinReverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+.origin-text {
+  min-width: 0;
+}
+.origin-text .section-label {
+  color: var(--red-soft);
+}
+.origin-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+  color: var(--white);
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+.origin-body {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 0.75rem;
+}
+.origin-body em {
+  color: var(--taxi);
+  font-style: italic;
+}
+.origin-listen {
+  margin-top: 1rem;
+  background: transparent;
+  border-color: rgba(255,255,255,0.2);
+  color: var(--white);
+}
+.origin-listen:hover {
+  border-color: var(--red-soft);
+  background: rgba(255,255,255,0.08);
+}
+@media (max-width: 767px) {
+  .origin-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+  .vinyl-record { width: 140px; height: 140px; }
+  .vinyl-label { width: 55px; height: 55px; }
+  .vinyl-title { font-size: 0.42rem; }
+  .vinyl-artist { font-size: 0.33rem; }
+}
+
+/* =====================================================
    FOOTER — Dark, tight
    ===================================================== */
 .footer {
@@ -698,7 +976,8 @@ img { max-width: 100%; height: auto; display: block; }
   .nav { padding: 0.5rem 1rem; }
   .nav-logo { height: 30px; }
   .nav-links a { padding: 0.3rem 0.5rem; font-size: 0.72rem; }
-  .hero { padding: 5rem 1rem 2rem; }
+  .nyc-ticker { top: 43px; height: 24px; }
+  .hero { padding: 5.5rem 1rem 2rem; }
   .hero-logo { width: min(160px, 40vw); }
   #map { height: 50vh; }
   .map-sidebar { max-height: 35vh; }
