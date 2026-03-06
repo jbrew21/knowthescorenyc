@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:knowthescorenyc.substack.com)",
+      "WebFetch(domain:www.google.com)"
+    ]
+  }
+}

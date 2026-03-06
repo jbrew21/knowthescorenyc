@@ -1,0 +1,199 @@
+---
+layout: base.njk
+---
+
+{# ===== LOADING — Photo Montage (Faces + NYC Landmarks) ===== #}
+<div class="loading-screen" aria-hidden="true">
+  {# Interview face photos #}
+  {% for interview in collections.interviews %}
+  <img src="{{ interview.data.photo }}" alt="{{ interview.data.name }}" class="montage-photo montage-face" data-face="{{ loop.index0 }}">
+  {% endfor %}
+  {# NYC landmark photos — interleaved by JS #}
+  <img src="/assets/images/nyc-brooklyn-bridge.jpg" alt="Brooklyn Bridge" class="montage-photo montage-landmark" data-landmark="0">
+  <img src="/assets/images/nyc-times-square.jpg" alt="Times Square" class="montage-photo montage-landmark" data-landmark="1">
+  <img src="/assets/images/nyc-subway.jpg" alt="The Subway" class="montage-photo montage-landmark" data-landmark="2">
+  <img src="/assets/images/nyc-skyline.jpg" alt="Manhattan Skyline" class="montage-photo montage-landmark" data-landmark="3">
+  <div class="montage-overlay montage-logo-overlay"></div>
+  <img src="/assets/images/logo.webp" alt="{{ site.title }}" class="montage-logo">
+  <div class="montage-dots"></div>
+</div>
+
+{# ===== NAVIGATION ===== #}
+<nav class="nav" role="navigation">
+  <a href="/">
+    <img src="/assets/images/logo.webp" alt="{{ site.title }}" class="nav-logo">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#map-section">Map</a></li>
+    <li><a href="#interviews">Interviews</a></li>
+    <li><a href="#get-interviewed">Get Interviewed</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+{# ===== HERO ===== #}
+<section class="hero" id="hero">
+  <img src="/assets/images/logo.webp" alt="{{ site.title }}" class="hero-logo">
+  <h1 class="hero-tagline">{{ site.tagline }}</h1>
+  <p class="hero-subtitle">{{ site.subtitle }}</p>
+  <div class="hero-ctas">
+    <a href="#map-section" class="btn btn-primary">Explore the Map</a>
+    <a href="{{ site.substackUrl }}" class="btn btn-secondary" target="_blank" rel="noopener">Read on Substack</a>
+  </div>
+</section>
+
+{# ===== MAP SECTION ===== #}
+<section class="map-section" id="map-section">
+  <div class="map-header">
+    <h2>Where we've <span>been</span></h2>
+    <span class="map-header-sub">Interviews across NYC</span>
+  </div>
+  <div class="map-container">
+    <div id="map" role="application" aria-label="Interactive map of NYC interview locations"></div>
+    <div class="map-sidebar">
+      <div class="map-sidebar-title">All Interviews</div>
+      {% for interview in collections.interviews %}
+      <div class="sidebar-card" data-index="{{ loop.index0 }}" tabindex="0" role="button" aria-label="View {{ interview.data.name }} on the map">
+        {% if interview.data.photo %}
+        <img src="{{ interview.data.photo }}" alt="{{ interview.data.name }}" class="sidebar-card-photo" loading="lazy">
+        {% else %}
+        <div class="sidebar-card-photo-placeholder">{{ interview.data.name | first }}</div>
+        {% endif %}
+        <div class="sidebar-card-info">
+          <div class="sidebar-card-name">{{ interview.data.name }}</div>
+          <div class="sidebar-card-place">{{ interview.data.placeName }}{% if interview.data.neighborhood %} &middot; {{ interview.data.neighborhood }}{% endif %}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{# Embed interview data as JSON for the map JS #}
+<script id="interview-data" type="application/json">
+[
+  {% for interview in collections.interviews %}
+  {
+    "name": {{ interview.data.name | dump | safe }},
+    "quote": {{ interview.data.quote | dump | safe }},
+    "bio": {{ interview.data.bio | dump | safe }},
+    "placeName": {{ interview.data.placeName | dump | safe }},
+    "placeType": {{ (interview.data.placeType or "") | dump | safe }},
+    "latitude": {{ interview.data.latitude }},
+    "longitude": {{ interview.data.longitude }},
+    "neighborhood": {{ (interview.data.neighborhood or "") | dump | safe }},
+    "substackUrl": {{ interview.data.substackUrl | dump | safe }},
+    "date": {{ interview.data.date | dump | safe }},
+    "photo": {{ (interview.data.photo or "") | dump | safe }}
+  }{% if not loop.last %},{% endif %}
+  {% endfor %}
+]
+</script>
+
+{# ===== INTERVIEW GALLERY ===== #}
+<section class="gallery-section" id="interviews">
+  <div class="section-header">
+    <div class="section-label">The Interviews</div>
+    <div class="section-title">Stories from the city</div>
+  </div>
+
+  <div class="gallery-grid">
+    {% for interview in collections.interviews %}
+    <a href="{{ interview.data.substackUrl }}" class="interview-card" target="_blank" rel="noopener">
+      {% if interview.data.photo %}
+      <img src="{{ interview.data.photo }}" alt="{{ interview.data.name }}" class="card-photo" loading="lazy">
+      {% else %}
+      <div class="card-photo-placeholder">{{ interview.data.name | first }}</div>
+      {% endif %}
+      <div class="card-body">
+        <div class="card-quote">"{{ interview.data.quote }}"</div>
+        <div class="card-name">{{ interview.data.name }}</div>
+        <div class="card-bio">{{ interview.data.bio }}</div>
+        <div class="card-footer">
+          {% if interview.data.neighborhood %}
+          <span class="card-tag">{{ interview.data.neighborhood }}</span>
+          {% endif %}
+          <span>{{ interview.data.date | dateFormat("short") }}</span>
+          <span class="card-arrow">&rarr;</span>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+{# ===== GET INTERVIEWED ===== #}
+<section class="interview-request-section" id="get-interviewed">
+  <div class="request-inner">
+    <div class="section-header" style="text-align:center">
+      <div class="section-label">Join the conversation</div>
+      <div class="section-title" style="text-align:center">Got a story to tell?</div>
+      <p style="color:var(--text-secondary);margin-top:0.5rem;font-size:0.95rem">Show us your New York. Isabel is always looking for the next interview.</p>
+    </div>
+
+    <div class="request-form-wrapper">
+      <form class="request-form" name="interview-request" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <p class="sr-only">
+          <label>Don't fill this out: <input name="bot-field"></label>
+        </p>
+
+        <div class="form-group">
+          <label class="form-label" for="req-name">Your name</label>
+          <input class="form-input" type="text" id="req-name" name="name" required placeholder="What do people call you?">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="req-neighborhood">Neighborhood</label>
+          <input class="form-input" type="text" id="req-neighborhood" name="neighborhood" required placeholder="Where in NYC do you live?">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="req-years">How long have you lived in NYC?</label>
+          <input class="form-input" type="text" id="req-years" name="years" required placeholder="Born here? Just moved? Somewhere in between?">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="req-spot">Favorite spot in the city</label>
+          <input class="form-input" type="text" id="req-spot" name="favorite-spot" required placeholder="Park, restaurant, bodega, rooftop — anything">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="req-why">Why should Isabel interview you?</label>
+          <textarea class="form-textarea" id="req-why" name="pitch" rows="4" placeholder="What's your New York story?"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="req-contact">How to reach you</label>
+          <input class="form-input" type="text" id="req-contact" name="contact" required placeholder="Email or @instagram">
+        </div>
+
+        <button type="submit" class="btn btn-primary form-submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+{# ===== ABOUT ===== #}
+<section class="about-section" id="about">
+  <div class="section-label" style="text-align:center">About</div>
+  <img src="/assets/images/isabel-1.jpg" alt="Isabel Togoh" class="about-photo">
+  <p class="about-text">
+    I'm Isabel, a journalist who interviews native and non-native New Yorkers about what makes this city so great — in their favorite NYC spots. Every week, a new Q&A lands in your inbox.
+  </p>
+  <div class="about-links">
+    <a href="{{ site.substackUrl }}" class="btn btn-primary" target="_blank" rel="noopener">Subscribe on Substack</a>
+    <a href="{{ site.googleMapsUrl }}" class="btn btn-secondary" target="_blank" rel="noopener">View on Google Maps</a>
+  </div>
+</section>
+
+{# ===== FOOTER ===== #}
+<footer class="footer">
+  <div class="footer-tagline">Know The Score NYC</div>
+  <div class="footer-links">
+    <a href="{{ site.substackUrl }}" target="_blank" rel="noopener">Substack</a>
+    <a href="{{ site.instagramUrl }}" target="_blank" rel="noopener">Instagram</a>
+    <a href="{{ site.googleMapsUrl }}" target="_blank" rel="noopener">Google Maps</a>
+  </div>
+  <div class="footer-copy">&copy; 2026 Isabel Togoh</div>
+  <div class="footer-anthora">We are happy to serve you</div>
+</footer>
