@@ -198,6 +198,7 @@ img[src*="barella"] {
   letter-spacing: -0.01em;
 }
 .nav-links a:hover { color: var(--text); background: rgba(43, 57, 144, 0.06); }
+.nav-links .nav-short { display: none; }
 .nav-links a.active { color: var(--blue); font-weight: 600; }
 
 /* =====================================================
@@ -1145,11 +1146,14 @@ img[src*="barella"] {
    RESPONSIVE — Mobile
    ===================================================== */
 @media (max-width: 767px) {
-  .nav { padding: 0.5rem 1rem; }
-  .nav-logo { height: 30px; }
-  .nav-links a { padding: 0.3rem 0.5rem; font-size: 0.72rem; }
-  .nyc-ticker { top: 43px; height: 24px; }
-  .hero { padding: 5.5rem 1rem 2rem; }
+  .nav { padding: 0.4rem 0.5rem; justify-content: center; }
+  .nav-logo { display: none; }
+  .nav-links { flex-wrap: nowrap; gap: 0; justify-content: center; }
+  .nav-links a { padding: 0.3rem 0.4rem; font-size: 0.68rem; white-space: nowrap; }
+  .nav-links .nav-full { display: none; }
+  .nav-links .nav-short { display: inline; }
+  .nyc-ticker { top: 33px; height: 24px; }
+  .hero { padding: 5rem 1rem 2rem; }
   .hero-logo { width: min(160px, 40vw); }
   #map { height: 50vh; }
   .map-sidebar { max-height: 35vh; }
