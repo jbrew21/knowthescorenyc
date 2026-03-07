@@ -64,6 +64,10 @@ img { max-width: 100%; height: auto; display: block; }
 .montage-photo.active {
   opacity: 1;
 }
+/* Barella — keep her head in frame */
+img[src*="barella"] {
+  object-position: center 15% !important;
+}
 /* Landmarks — cooler, moodier, center-focused */
 .montage-photo.montage-landmark {
   filter: grayscale(25%) contrast(1.1) brightness(0.9) saturate(0.8);
@@ -905,6 +909,174 @@ img { max-width: 100%; height: auto; display: block; }
   .vinyl-label { width: 55px; height: 55px; }
   .vinyl-title { font-size: 0.42rem; }
   .vinyl-artist { font-size: 0.33rem; }
+}
+
+/* =====================================================
+   NYC GLOSSARY — Subway Sign Style
+   ===================================================== */
+.glossary-section {
+  padding: 4rem 1.5rem;
+  background: #1a1a2e;
+  position: relative;
+  overflow: hidden;
+}
+/* Subway tile texture overlay */
+.glossary-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 23px,
+      rgba(255,255,255,0.03) 23px,
+      rgba(255,255,255,0.03) 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 23px,
+      rgba(255,255,255,0.03) 23px,
+      rgba(255,255,255,0.03) 24px
+    );
+  pointer-events: none;
+}
+.glossary-section .section-label { color: var(--taxi); }
+.glossary-section .section-title { color: #fff; }
+
+.glossary-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.glossary-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+/* --- Each term card --- */
+.glossary-card {
+  background: #111;
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem;
+  border-left: 4px solid transparent;
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+}
+.glossary-card.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.glossary-card:hover {
+  border-left-color: var(--taxi);
+}
+
+/* Stagger the animation delays */
+.glossary-card:nth-child(1) { transition-delay: 0s; }
+.glossary-card:nth-child(2) { transition-delay: 0.07s; }
+.glossary-card:nth-child(3) { transition-delay: 0.14s; }
+.glossary-card:nth-child(4) { transition-delay: 0.21s; }
+.glossary-card:nth-child(5) { transition-delay: 0.28s; }
+.glossary-card:nth-child(6) { transition-delay: 0.35s; }
+.glossary-card:nth-child(7) { transition-delay: 0.42s; }
+.glossary-card:nth-child(8) { transition-delay: 0.49s; }
+.glossary-card:nth-child(9) { transition-delay: 0.56s; }
+.glossary-card:nth-child(10) { transition-delay: 0.63s; }
+
+/* --- Subway sign row (bullet + term) --- */
+.subway-sign-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+/* --- Subway line bullets --- */
+.subway-bullet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+  flex-shrink: 0;
+  animation: bulletPulse 3s ease-in-out infinite;
+}
+/* Real MTA line colors */
+.subway-bullet[data-line="1"],
+.subway-bullet[data-line="2"],
+.subway-bullet[data-line="3"] { background: #EE352E; }
+.subway-bullet[data-line="4"],
+.subway-bullet[data-line="5"],
+.subway-bullet[data-line="6"] { background: #00933C; }
+.subway-bullet[data-line="7"] { background: #B933AD; }
+.subway-bullet[data-line="A"],
+.subway-bullet[data-line="C"],
+.subway-bullet[data-line="E"] { background: #0039A6; }
+.subway-bullet[data-line="B"],
+.subway-bullet[data-line="D"],
+.subway-bullet[data-line="F"],
+.subway-bullet[data-line="M"] { background: #FF6319; }
+.subway-bullet[data-line="G"] { background: #6CBE45; }
+.subway-bullet[data-line="J"],
+.subway-bullet[data-line="Z"] { background: #996633; }
+.subway-bullet[data-line="L"] { background: #A7A9AC; }
+.subway-bullet[data-line="N"],
+.subway-bullet[data-line="Q"],
+.subway-bullet[data-line="R"],
+.subway-bullet[data-line="W"] { background: #FCCC0A; color: #1a1a2e; }
+.subway-bullet[data-line="S"] { background: #808183; }
+
+@keyframes bulletPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.15); }
+  50% { box-shadow: 0 0 0 6px rgba(255,255,255,0); }
+}
+
+/* --- The term itself (subway station sign look) --- */
+.subway-sign {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.glossary-pronunciation {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  font-style: italic;
+  margin-bottom: 0.4rem;
+  padding-left: calc(28px + 0.75rem);
+}
+
+.glossary-origin {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.55;
+  padding-left: calc(28px + 0.75rem);
+}
+
+/* --- Mobile --- */
+@media (max-width: 767px) {
+  .glossary-section { padding: 3rem 1rem; }
+  .subway-sign { font-size: 1rem; }
+  .subway-bullet { width: 24px; height: 24px; font-size: 0.75rem; }
+  .glossary-pronunciation { padding-left: calc(24px + 0.75rem); font-size: 0.72rem; }
+  .glossary-origin { padding-left: calc(24px + 0.75rem); font-size: 0.8rem; }
+  .glossary-card { padding: 0.9rem 1rem; }
 }
 
 /* =====================================================

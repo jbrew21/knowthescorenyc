@@ -49,6 +49,22 @@
     });
   });
 
+  // Glossary scroll-reveal animation
+  const glossaryCards = document.querySelectorAll('.glossary-card');
+  if (glossaryCards.length && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    glossaryCards.forEach(function(card) { observer.observe(card); });
+  } else {
+    glossaryCards.forEach(function(card) { card.classList.add('visible'); });
+  }
+
   // Form submission feedback
   const form = document.querySelector('.request-form');
   if (form) {
