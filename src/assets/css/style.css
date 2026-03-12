@@ -24,7 +24,7 @@ html { scroll-behavior: smooth; }
 body {
   font-family: var(--font-body);
   color: var(--text);
-  background: var(--cream);
+  background: var(--white);
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -174,7 +174,7 @@ img[src*="barella"] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 248, 240, 0.92);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(43, 57, 144, 0.08);
